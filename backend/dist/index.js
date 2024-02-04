@@ -1,6 +1,6 @@
 import app from './app.js';
 import { connectToDatabase } from './db/connection.js';
-const PORT = process.env.BACKEND_PORT || 5002;
+const PORT = process.env.BACKEND_PORT ?? 5002;
 //connections and listeners
 connectToDatabase()
     .then(() => {
