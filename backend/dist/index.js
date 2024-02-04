@@ -1,10 +1,12 @@
-import express from "express";
-const app = express();
-app.use(express.json());
-app.get('/user/:userId', (req, res, next) => {
-    console.log("🚀 ~ app.get ~ req:", req.params.userId);
-    console.log('/hello - called');
-    return res.send("Hello");
+import app from './app.js';
+import { connectToDatabase } from './db/connection.js';
+const PORT = process.env.BACKEND_PORT || 5002;
+//connections and listeners
+connectToDatabase()
+    .then(() => {
+    app.listen(PORT, () => console.log('Server Open'));
+})
+    .catch((error) => {
+    console.log(`Error while connecting to MongoDB - error: ${error}`);
 });
-app.listen(5001, () => console.log('Server Open'));
 //# sourceMappingURL=index.js.map
