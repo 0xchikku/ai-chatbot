@@ -1,4 +1,5 @@
 import User from "../models/User.js";
+import { hash } from "bcrypt";
 export const getAllUsers = async (req, res, next) => {
     try {
         const users = await User.find();
@@ -7,6 +8,19 @@ export const getAllUsers = async (req, res, next) => {
     catch (error) {
         console.log(`Error while getting all users, error: ${error}`);
         return res.status(500).json({ message: "ERROR", cause: (error.message) });
+    }
+};
+export const userSignup = async (req, res, next) => {
+    try {
+        const { name, email, password } = req.body;
+        const hashedPassword = await hash(password, 10);
+        const user = new User({ name, email, password: hashedPassword });
+        await user.save();
+        return res.status(200).json({ message: "OK", id: user._id.toString() });
+    }
+    catch (error) {
+        console.log(`Error while user signup, error: ${error}`);
+        return res.status(500).json({ message: "ERROR", cause: error?.message });
     }
 };
 //# sourceMappingURL=user-controllers.js.map
