@@ -6,13 +6,11 @@ export const validate = (validations: ValidationChain[]) => {
   return async (req: Request, res: Response, next: NextFunction) => {
     for (const validation of validations) {
       const result = await validation.run(req);
-      console.log("🚀 ~ return ~ result:", result)
       if (!result.isEmpty()) {
         break;
       }
     }
     const errors = validationResult(req);
-    console.log("🚀 ~ return ~ errors:", errors)
     if (errors.isEmpty()) {
       return next();
     }

@@ -3,13 +3,11 @@ export const validate = (validations) => {
     return async (req, res, next) => {
         for (const validation of validations) {
             const result = await validation.run(req);
-            console.log("🚀 ~ return ~ result:", result);
             if (!result.isEmpty()) {
                 break;
             }
         }
         const errors = validationResult(req);
-        console.log("🚀 ~ return ~ errors:", errors);
         if (errors.isEmpty()) {
             return next();
         }
