@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import User from "../models/User.js";
 import { compare, hash } from "bcrypt";
 import { findExistingUser } from "../helpers/user-helpers.js";
+import { clearAndSetUserCookie } from "../services/user-services.js";
 
 export const getAllUsers = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -25,6 +26,7 @@ export const userSignup = async (req: Request, res: Response, next: NextFunction
     const hashedPassword = await hash(password, 10);
     const user = new User({ name, email, password: hashedPassword });
     await user.save();
+    clearAndSetUserCookie(res, user);
     return res.status(201).json({ message: "OK", id: user._id.toString() });
   } catch (error: any) {
     console.log(`Error while user signup, error: ${error}`);
@@ -49,6 +51,8 @@ export const userLogin = async (req: Request, res: Response, next: NextFunction)
       console.log(message);
       return res.status(403).json(message);
     }
+
+    clearAndSetUserCookie(res, existingUser);
 
     return res.status(201).json({ message: "OK", userId: existingUser._id })
   } catch (error: any) {

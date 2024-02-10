@@ -1,6 +1,7 @@
 import User from "../models/User.js";
 import { compare, hash } from "bcrypt";
 import { findExistingUser } from "../helpers/user-helpers.js";
+import { clearAndSetUserCookie } from "../services/user-services.js";
 export const getAllUsers = async (req, res, next) => {
     try {
         const users = await User.find();
@@ -23,6 +24,7 @@ export const userSignup = async (req, res, next) => {
         const hashedPassword = await hash(password, 10);
         const user = new User({ name, email, password: hashedPassword });
         await user.save();
+        clearAndSetUserCookie(res, user);
         return res.status(201).json({ message: "OK", id: user._id.toString() });
     }
     catch (error) {
@@ -45,6 +47,7 @@ export const userLogin = async (req, res, next) => {
             console.log(message);
             return res.status(403).json(message);
         }
+        clearAndSetUserCookie(res, existingUser);
         return res.status(201).json({ message: "OK", userId: existingUser._id });
     }
     catch (error) {
