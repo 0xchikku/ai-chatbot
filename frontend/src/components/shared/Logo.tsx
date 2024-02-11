@@ -13,7 +13,7 @@ function Logo() {
       <Link to={'/'} style={{ textDecoration: "none", display: "flex" }}>
         <img src={chatLogo} alt="chat-logo" width={'30px'} height={'30px'} className="chatLogo" />
         <Typography sx={{ display: { md: "block", sm: "none", xs: "none" }, ml: "5px", fontWeight: "800", color: "#05101c" }}>
-          <span style={{ fontSize: "20px" }}>ai</span>-Bot
+          <span style={{ fontSize: "20px" }}>Chat</span>-Bot
         </Typography>
       </Link >
     </div >
