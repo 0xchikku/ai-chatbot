@@ -8,3 +8,13 @@ body {
   color: #05101c;
   font-family: 'Roboto Slab', serif;
 }
+
+.nav-link {
+  font-weight: 600;
+  text-transform: uppercase;
+  text-decoration: none;
+  margin-right: 5px;
+  margin-left: 5px;
+  padding: 8px 10px;
+  letter-spacing: 1px;
+}
