@@ -5,6 +5,6 @@ export const clearAndSetUserCookie = (res, user) => {
     const token = createToken(user._id.toString(), user.email, "7d");
     const expires = new Date();
     expires.setDate(expires.getDate() + 7); // setting 7 days
-    res.cookie(AUTH_COOKIE, token, { path: "/", domain: "localhost", httpOnly: true, signed: true, expires });
+    res.cookie(AUTH_COOKIE, token, { path: "/", domain: "localhost", httpOnly: true, signed: true, expires, sameSite: "none", secure: true });
 };
 //# sourceMappingURL=user-services.js.map
